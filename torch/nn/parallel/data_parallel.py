@@ -92,6 +92,12 @@ def data_parallel(module, inputs, device_ids, output_device=None, dim=0, module_
     if not isinstance(inputs, tuple):
         inputs = (inputs,)
 
+    if not device_ids:
+        if module_kwargs is None:
+            return module(*inputs)
+        else:
+            return module(*inputs, **module_kwargs)
+
     if output_device is None:
         output_device = device_ids[0]
 
